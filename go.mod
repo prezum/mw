@@ -1,4 +1,4 @@
-module gitlab.devprezum.ru/prezentarium/middleware
+module gitlab.devprezum.ru/prezentarium/mw
 
 go 1.22.5
 

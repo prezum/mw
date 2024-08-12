@@ -8,7 +8,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 	"gitlab.devprezum.ru/prezentarium/errcodes"
-	"gitlab.devprezum.ru/prezentarium/middleware/controllers"
+	"gitlab.devprezum.ru/prezentarium/mw/controllers"
 )
 
 type JWTUser struct {

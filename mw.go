@@ -31,6 +31,10 @@ type JWTContext struct {
 	echo.Context
 }
 
+func (c *JWTContext) SetJWTUser(user *JWTUser) {
+	c.user = user
+}
+
 func (c *JWTContext) GetJWTToken() string {
 	return c.token
 }

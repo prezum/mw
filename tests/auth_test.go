@@ -2,13 +2,13 @@ package tests
 
 import (
 	"encoding/json"
-	"github.com/golang-jwt/jwt/v5"
 	"log/slog"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 	"time"
 
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -45,12 +45,21 @@ func TestJWTMiddleware(t *testing.T) {
 	e := echo.New()
 	log := slog.New(slog.NewTextHandler(nil, nil))
 
-	jwtMiddleWare := mw.NewAuthMiddleware(log, nil)
+	user := &mw.JWTUser{
+		Name:   "Test",
+		Email:  "test@vkteam.ru",
+		Avatar: "",
+		ID:     123,
+		IsReal: true,
+	}
+	secret := []byte("secret")
+	invalidSecret := []byte("other")
+	jwtPublic := []byte("secret")
 
-	user := &mw.JWTUser{ID: 123, Email: "test@example.com"}
-
-	validJWTToken, _ := generateValidJWTToken(user, nil)
-	expiredJWTToken, _ := generateExpiredJWTToken(user, nil)
+	validJWTToken, _ := generateValidJWTToken(user, secret)
+	expiredJWTToken, _ := generateExpiredJWTToken(user, secret)
+	invalidJWTToken, _ := generateExpiredJWTToken(user, invalidSecret)
+	jwtMiddleWare := mw.NewAuthMiddleware(log, jwtPublic)
 
 	tests := []struct {
 		name           string
@@ -85,8 +94,14 @@ func TestJWTMiddleware(t *testing.T) {
 		{
 			name:           "Expired token",
 			authHeader:     "Bearer " + expiredJWTToken,
-			expectedStatus: http.StatusOK,
-			expectedError:  nil,
+			expectedStatus: http.StatusUnauthorized,
+			expectedError:  errcodes.ErrTokenExpired,
+		},
+		{
+			name:           "Invalid token",
+			authHeader:     "Bearer " + invalidJWTToken,
+			expectedStatus: http.StatusUnauthorized,
+			expectedError:  errcodes.ErrInvalidToken,
 		},
 	}
 

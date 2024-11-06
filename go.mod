@@ -1,4 +1,4 @@
-module gitlab.devprezum.ru/prezentarium/mw
+module github.com/prezum/mw
 
 go 1.22.2
 

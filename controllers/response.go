@@ -3,7 +3,7 @@ package controllers
 import (
 	"errors"
 
-	"gitlab.devprezum.ru/prezentarium/errcodes"
+	"github.com/prezum/errcodes"
 )
 
 type response struct {

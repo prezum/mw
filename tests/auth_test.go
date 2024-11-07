@@ -10,11 +10,11 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
+	"github.com/prezum/errcodes"
 	"github.com/prezum/mw"
 	"github.com/prezum/mw/controllers"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"gitlab.devprezum.ru/prezentarium/errcodes"
 )
 
 func generateValidJWTToken(user *mw.JWTUser, secret []byte) (string, error) {

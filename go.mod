@@ -5,8 +5,8 @@ go 1.22.2
 require (
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/labstack/echo/v4 v4.12.0
+	github.com/prezum/errcodes v1.0.1
 	github.com/stretchr/testify v1.8.4
-	gitlab.devprezum.ru/prezentarium/errcodes v0.0.5
 )
 
 require (
